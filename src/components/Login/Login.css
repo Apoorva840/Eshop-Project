@@ -1,0 +1,73 @@
+.App-ShoppingCartIcon {
+    height: 60vmin;
+    pointer-events: none;
+  }
+  
+  
+  .App-header {
+    align-items: center;
+    min-width: 205vh;
+    display: flex;
+    flex-direction: row;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+  
+  .App-link {
+    color: white;
+  }
+  
+  .App-signin{
+    align-content: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  
+  }
+  .Sign-In{
+    color: white;
+    background-color: blue;
+    width :350px;
+    border-color: blue;
+  }
+  
+  .input1{
+    width :350px;
+    height: 40px;
+    background-color: rgb(240, 246, 248);
+    border-color: white;
+    border-top: white;
+    border-left: white;
+    
+  }
+  
+  .input2{
+    width :350px;
+    height: 40px;
+    background-color: rgb(240, 246, 248);
+    border-color: white;
+    border-top: white;
+    border-left: white;
+  }
+  
+  .label1{
+    text-indent: 100px;
+    
+  }
+  
+  .label2{
+    text-indent: 70px;
+    
+  }
+  
+  .contents{
+    color: rgb(158, 154, 154);
+    text-size-adjust: 200px;
+  }
+  
+  .link-C{
+    color: darkblue;
+  }
+  
+  .link-color{
+    color: darkblue;
+  }

@@ -1,0 +1,70 @@
+.header {
+    align-items: center;
+    min-width: 205vh;
+    display: flex;
+    flex-direction: row;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+
+  .link{
+    color: white;
+  }
+
+  .App-SignUp{
+    align-content: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  
+  }
+  .Sign-Up{
+    color: white;
+    background-color: blue;
+    width :350px;
+    border-color: blue;
+  }
+
+  .input1{
+    width :350px;
+    height :40px;
+  }
+
+  .input2{
+    width :350px;
+    height :40px;
+  }
+
+  .input3{
+    width :350px;
+    height :40px;
+  }
+
+  .input4{
+    width :350px;
+    height :40px;
+  }
+
+  .input5{
+    width :350px;
+    height :40px;
+  }
+
+  .input6{
+    width :350px;
+    height :40px;
+  }
+
+  .contents1{
+    color: rgb(158, 154, 154);
+    text-size-adjust: 200px;
+  }
+
+ .link-color{
+    color: darkblue;
+ }
+
+ .link-C{
+    color: darkblue;
+
+ }
+
