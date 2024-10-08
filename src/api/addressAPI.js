@@ -9,7 +9,7 @@ export const fetchAllAddresses = (accessToken) => {
 		promiseResolveRef = resolve;
 		promiseRejectRef = reject;
 	});
-	fetch('http://localhost:8080/api/addresses', {
+	fetch('https://dev-project-ecommerce.upgrad.dev/api/addresses', {
 		method: 'GET',
 		headers: {
 			'x-auth-token': accessToken,
@@ -51,7 +51,7 @@ export const createAddress = (requestJson, accessToken) => {
 		promiseResolveRef = resolve;
 		promiseRejectRef = reject;
 	});
-	fetch('http://localhost:8080/api/addresses', {
+	fetch('https://dev-project-ecommerce.upgrad.dev/api/addresses', {
 		method: 'POST',
 		body: JSON.stringify(requestJson),
 		headers: {

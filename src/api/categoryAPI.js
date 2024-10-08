@@ -7,7 +7,7 @@ export const fetchAllCategories = (accessToken) => {
 		promiseResolveRef = resolve;
 		promiseRejectRef = reject;
 	});
-	fetch('http://localhost:8080/api/products/categories', {
+	fetch('https://dev-project-ecommerce.upgrad.dev/api/products/categories', {
 		method: 'GET',
 		headers: {
 			'x-auth-token': accessToken,
