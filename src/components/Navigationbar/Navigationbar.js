@@ -139,7 +139,7 @@ const NavigationBar = () => {
 							mr: 2,
 							display: { xs: 'flex', md: 'none' },
 							flexGrow: 1,
-							fontFamily: 'monospace',
+							
 							color: 'inherit',
 							textDecoration: 'none',
 						}}

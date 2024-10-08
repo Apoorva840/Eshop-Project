@@ -1,18 +1,18 @@
-import AppBar from '@mui/material/AppBar';
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+//Login page
+import Grid from "@mui/material/Grid";
+import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import React from 'react';
-import { useState, useContext, useEffect } from "react";
-import { useNavigate, useLocation } from 'react-router-dom';
-import { AuthContext } from "../hooks/useAuthentication";
-////import useAuthentication from "../../components/hooks/useAuthentication.js";
-import useServices from "../../components/hooks/useServices.js";
+import {Link} from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import Backdrop from "@mui/material/Backdrop";
-import './Login.css';
+import {useState, useContext, useEffect} from "react";
+import { Navigate } from "react-router-dom";
+import useAuthentication from "../../hooks/useAuthentication";
+import {useNavigate, useLocation} from "react-router-dom";
+import useServices from "../../hooks/useServices";
 
 const Login = () => {
 
@@ -31,18 +31,17 @@ const Login = () => {
 
 	const [formData, setFormData] = useState(initialState);
 	const [busy, setBusy] = useState(false);
-	////const { AuthContext } = useAuthentication();
-	const { login, loggedInUser } = useContext(AuthContext);
+	const {AuthCtx} = useAuthentication();
+	const {login, loggedInUser} = useContext(AuthCtx);
 	const history = useNavigate();
 	const location = useLocation();
-	const { from } = (location && location.state) || { from: { pathname: "/home" } };
-	const { ServicesCtx } = useServices();
-	const { broadcastMessage } = useContext(ServicesCtx);
+	const {from} = (location && location.state) || {from : {pathname: "/home"}};
+	const {ServicesCtx} = useServices();
+	const {broadcastMessage} = useContext(ServicesCtx);
 
 	useEffect(() => {
 		loggedInUser && history(from, { replace: true });
 	}, [loggedInUser, from, history]);
-
 
 	let validateAndLoginData = () => {
 		setBusy(true);
@@ -51,7 +50,7 @@ const Login = () => {
 		};
 		let requestJson = {};
 		let validDetails = true;
-		for (let k in formData) {
+		for(let k in formData) {
 			let json = getValidity(k, formData[k].value);
 			data[k] = {
 				value: data[k].value,
@@ -59,12 +58,12 @@ const Login = () => {
 				errorMessage: json.message,
 			};
 			validDetails = validDetails && json.valid;
-			if (json.valid) {
+			if(json.valid) {
 				requestJson[k] = data[k].value;
 			}
 		}
 		setFormData(data);
-		if (validDetails) {
+		if(validDetails) {
 			login(requestJson.username, requestJson.password).then(() => {
 				// do nothing
 				broadcastMessage("Login successful", "success");
@@ -86,13 +85,13 @@ const Login = () => {
 	let getValidity = (field, value) => {
 		let valid = true;
 		let message = null;
-		if (value == null || value.length === 0) {
+		if(value == null || value.length === 0) {
 			valid = false;
 			message = "This field is required.";
 		} else {
 			switch (field) {
 				case "username": {
-					if (value.length > 255) {
+					if(value.length > 255) {
 						valid = false;
 						message = "Email can be of length 255 characters";
 					} else {
@@ -108,7 +107,7 @@ const Login = () => {
 					}
 					break;
 				}
-				default: {
+				default : {
 					return;
 				}
 			}
@@ -135,92 +134,98 @@ const Login = () => {
 	let saveOnFieldChange = (field, value) => {
 		setFormData({
 			...formData,
-			[field]: {
+			[field]:{
 				...formData[field],
 				value
 			}
 		});
 	};
 
-	//if (loggedInUser === null) {
+	if(loggedInUser === null) {
 		return (
-			<form>
-
-				<AppBar position="sticky">
-					<Toolbar>
-						<div className="App">
-							<header className="App-header">
-								<ShoppingCartIcon style={{ 'color': "white" }} /><br></br>
-								<Typography variant="h6" component="div" align="left" marginLeft="10px" sx={{ flexGrow: 1 }}>
-									UpGrad-Eshop
+			<Box sx={{flexGrow: 1}}>
+				<Grid container spacing={1}>
+					<Grid container item spacing={3}>
+						<Grid item xs={4}/>
+						<Grid item xs={4}>
+							<div style={{display: 'flex', justifyContent: 'center', marginTop: "10%"}}>
+							<LockOutlinedIcon style={{ 
+								borderRadius: '140px',
+								fontSize: '2rem',
+								'color': "white", 
+								backgroundColor: "red" }} />
+							</div>
+							<div style={{display: 'flex', justifyContent: 'center'}}>
+								<Typography
+									variant="subtitle1"
+									noWrap
+									sx={{
+										fontSize: "25px",
+										color: 'inherit',
+									}}
+								>
+									Sign in
 								</Typography>
-
-
-								<Button><a href=".\components\login\Login.js" className="App-link">Login </a>
+							</div>
+							<div style={{display: 'flex', justifyContent: 'center', marginTop: "30px"}}>
+								<TextField id="username"
+										   label="Email Address *"
+										   variant="outlined"
+										   fullWidth
+										   type="email"
+										   value={formData.username.value}
+										   onChange={(event) => saveOnFieldChange("username", event.target.value)}
+										   onBlur={(event) => validateAndSaveLoginData("username", event.target.value)}
+										   error={formData.username.error}
+										   helperText={formData.username.error && formData.username.errorMessage}
+								/>
+							</div>
+							<div style={{display: 'flex', justifyContent: 'center', marginTop: "30px"}}>
+								<TextField id="password"
+										   label="Password *"
+										   variant="outlined"
+										   fullWidth
+										   type="password"
+										   value={formData.password.value}
+										   onChange={(event) => saveOnFieldChange("password", event.target.value)}
+										   onBlur={(event) => validateAndSaveLoginData("password", event.target.value)}
+										   error={formData.password.error}
+										   helperText={formData.password.error && formData.password.errorMessage}
+								/>
+							</div>
+							<div style={{display: 'flex', justifyContent: 'center', marginTop: "30px"}}>
+								<Button variant="contained"
+										color="primary"
+										fullWidth
+										onClick={validateAndLoginData}
+								>
+									SIGN IN
 								</Button>
-
-								<Button><a href=".\components\SignUp.js\SignUp.js" className="App-link">sign Up </a>
-								</Button>
-
-							</header>
-						</div>
-
-					</Toolbar>
-				</AppBar>
-				<div className="App-signin" align="center">
-					<br></br>
-					<LockOutlinedIcon style={{ 'color': "white", backgroundColor: "red" }} />
-					<br></br>
-
-					<h4> <b>Sign In</b></h4>
-					<br></br>
-
-					<label for="email" class="label1" >Email Address</label>
-					<input type="email" class="input1" placeholder="Enter Email" name="email" required variant="outlined"
-						value={formData.username.value}
-						onChange={(event) => saveOnFieldChange("username", event.target.value)}
-						onBlur={(event) => validateAndSaveLoginData("username", event.target.value)}
-						error={formData.username.error}
-						helperText={formData.username.error && formData.username.errorMessage}></input>
-					<br></br>
-					<br></br>
-
-					<label for="psw" class="label2">Password</label>
-					<input type="password" class="input2" placeholder="Enter Password" name="psw" required variant="outlined"
-						value={formData.password.value}
-						onChange={(event) => saveOnFieldChange("password", event.target.value)}
-						onBlur={(event) => validateAndSaveLoginData("password", event.target.value)}
-						error={formData.password.error}
-						helperText={formData.password.error && formData.password.errorMessage}></input>
-					<br></br>
-					<br></br>
-
-
-					<div class="clearfix">
-						<button type="button" class="Sign-In" onClick={validateAndLoginData}>SIGN IN</button>
-					</div>
-					<br></br>
-					<br></br>
-
-					<a className="link-C" href=".\components\SignUp\SignUp.js">Don't have an account? Sign Up</a>
-					<br></br>
-					<br></br>
-
-					<div className="contents">
-						<p>Copyright @ <a href="https://upgrad.com" class="link-color">UpGrad </a> 2021</p>
-					</div>
-				</div>
-
+							</div>
+							<div style={{display: 'flex', justifyContent: 'left', marginTop: "30px"}}>
+								<Link to="/signup">
+									<Typography variant="body1">
+										Don't have an account? Sign Up
+									</Typography>
+								</Link>
+							</div>
+						</Grid>
+						<Grid item xs={4}/>
+					</Grid>
+				</Grid>
 				<Backdrop
-					sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+					sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
 					open={busy}
 				>
-					<CircularProgress color="inherit" />
+					<CircularProgress color="inherit"/>
 				</Backdrop>
-
-			</form>
+			</Box>
+		);
+	} else {
+		return (
+			<Navigate to="/home"/>
 		);
 	}
-
+};
 
 export default Login;

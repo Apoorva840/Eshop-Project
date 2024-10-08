@@ -61,7 +61,7 @@ export const doSignup = (requestJson) => {
 		promiseResolveRef = resolve;
 		promiseRejectRef = reject;
 	});
-	fetch('https://dev-project-ecommerce.upgrad.dev/api/auth/Signin', {
+	fetch('https://dev-project-ecommerce.upgrad.dev/api/auth/signup', {
 		method: 'POST',
 		body: JSON.stringify(requestJson),
 		headers: {

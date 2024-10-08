@@ -9,7 +9,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { useCallback, useContext, useEffect, useState } from "react";
 import useAuthentication from "../../hooks/useAuthentication";
-import { createAddress, fetchAllAddresses } from "../../api/addressAPIs";
+import { createAddress, fetchAllAddresses } from "../../api/addressAPI";
 import { FormControl, InputLabel, Select } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";

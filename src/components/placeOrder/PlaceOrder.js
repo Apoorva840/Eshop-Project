@@ -9,7 +9,7 @@ import useAuthentication from "../../hooks/useAuthentication";
 import Address from "../Address/Address";
 import Button from "@mui/material/Button";
 import OrderDetails from "../orderDetails/OrderDetails";
-import { createOrder } from "../../api/orderAPIs";
+import { createOrder } from "../../api/OrderAPI";
 import useServices from "../../hooks/useServices";
 import ItemDetail from "../itemDetail/ItemDetail";
 import Alert from "@mui/material/Alert";

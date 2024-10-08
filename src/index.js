@@ -1,26 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from "react-redux";
+import store from "./store";
+import useAuthentication from "./hooks/useAuthentication.js";
+import useServices from "./hooks/useServices";
 import "bootstrap/dist/css/bootstrap.css";
-//import SignUp from './components/SignUp/SignUp.js';
-//import Login from './components/Login/Login.js';
+
+const ConnectedApp = () => {
+	const {AuthProvider} = useAuthentication();
+	const {ServicesProvider} = useServices();
+	return (
+		<AuthProvider>
+			<ServicesProvider>
+				<Provider store={store}>
+					<App />
+				</Provider>
+			</ServicesProvider>
+		</AuthProvider>
+	);
+};
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-       <App />
-  </BrowserRouter>
+	<ConnectedApp />
 );
-
-/*
-root.render(
-  <React.StrictMode>
-    <Login />
-  </React.StrictMode>
-);*/
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

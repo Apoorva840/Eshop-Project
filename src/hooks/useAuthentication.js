@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import { doLogin } from "../../api/userAuthenticationAPI";
+import {createContext, useState} from "react";
+import {doLogin} from "../api/userAuthenticationAPI";
+
+const AuthCtx = createContext();
 
 //Note: this hook is used for auth purposes and will be saved in browser cache
 const useAuthentication = () => {
@@ -14,6 +16,7 @@ const useAuthentication = () => {
 		initialState.accessTokenTimeout = json.accessTokenTimeout;
 		localStorage.setItem("ecommerce_upgrad_logged_in_user_details", JSON.stringify(initialState));
 	};
+
 	let clearCache = () => {
 		initialState = {
 			user: null,
@@ -25,7 +28,7 @@ const useAuthentication = () => {
 		localStorage.setItem("ecommerce_upgrad_logged_in_user_details", JSON.stringify(initialState));
 	};
 
-	if (initialState === null || initialState === undefined) {
+	if(initialState === null || initialState === undefined) {
 		initialState = {
 			user: null,
 			userId: null,
@@ -35,7 +38,7 @@ const useAuthentication = () => {
 		};
 	} else {
 		initialState = JSON.parse(initialState);
-		if (initialState.accessTokenTimeout !== null && initialState.accessTokenTimeout < Date.now()) {
+		if(initialState.accessTokenTimeout !== null && initialState.accessTokenTimeout < Date.now()) {
 			clearCache();
 		}
 	}
@@ -89,10 +92,10 @@ const useAuthentication = () => {
 	};
 
 	const hasRole = (roleArray) => {
-		if (roleArray === undefined || roleArray === null) {
+		if(roleArray === undefined || roleArray === null) {
 			return true;
 		}
-		if (initialState.roles !== null) {
+		if(initialState.roles !== null) {
 			for (let i = 0; i < initialState.roles.length; i++) {
 				for (let j = 0; j < roleArray.length; j++) {
 					if (initialState.roles[i] === roleArray[j]) {
@@ -109,19 +112,13 @@ const useAuthentication = () => {
 	};
 
 	return {
-		AuthContext,
+		AuthCtx,
 		AuthProvider: ({ children }) => (
-			<AuthContext.Provider value={{ loginError, loggedInUser, loggedInUserId, accessToken, accessTokenTimeout, roles, login, logout, hasRole, isAccessTokenValid }}>
+			<AuthCtx.Provider value={{ loginError, loggedInUser, loggedInUserId, accessToken, accessTokenTimeout, roles, login, logout, hasRole, isAccessTokenValid }}>
 				{children}
-			</AuthContext.Provider>
+			</AuthCtx.Provider>
 		)
 	};
 };
-
-
-export const AuthContext = React.createContext({
-	login: () => { },
-	loggedInUser: () => { }
-});
 
 export default useAuthentication;

@@ -1,29 +1,29 @@
 //Product category toggle button
 
-import {ToggleButton, ToggleButtonGroup} from "@mui/material";
-import {clearFilter, setFilter} from "../../store/actions/metadataAction";
-import {connect} from "react-redux";
-import {useEffect, useState} from "react";
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { clearFilter, setFilter } from "../../store/actions/metadataAction";
+import { connect } from "react-redux";
+import { useEffect, useState } from "react";
 
-const ProductCategory = ({filter, categories, changeFilter, removeFilter}) => {
+const ProductCategory = ({ filter, categories, changeFilter, removeFilter }) => {
 	const [filterValue, setFilterValue] = useState(filter || "ALL");
 
 	useEffect((newValue = filterValue, array = categories) => {
 		let exists = false;
-		for(let i = 0; i < array.length; i++) {
-			if(array[i] === newValue) {
+		for (let i = 0; i < array.length; i++) {
+			if (array[i] === newValue) {
 				exists = true;
 				break;
 			}
 		}
-		if(!exists) {
+		if (!exists) {
 			clearFilter();
 			setFilterValue("ALL");
 		}
 	}, [filterValue, categories]);
-	
+
 	const handleAlignment = (event, newAlignment) => {
-		if(newAlignment != null) {
+		if (newAlignment != null) {
 			setFilterValue(newAlignment);
 			if (newAlignment === "ALL") {
 				removeFilter();

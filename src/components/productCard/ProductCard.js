@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import {Delete, Edit} from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
-import "./productCard.css";
+import "./ProductCard.css";
 
 const ProductCard = ({mode, deleteProduct, modifyProduct, buyProduct, ...details}) => {
 

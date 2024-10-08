@@ -59,4 +59,5 @@ const AppBarSearch = () => {
 	);
 };
 
+
 export default AppBarSearch;

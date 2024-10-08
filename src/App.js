@@ -1,48 +1,45 @@
-import AppBar from '@mui/material/AppBar';
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import SearchIcon from '@mui/icons-material/Search';
-import InputBase from '@mui/material/InputBase';
-import { Link } from 'react-router-dom';
 import './App.css';
-                                                                                                                                                                                                                                                                                                                                  
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import PageSetUp from "./components/PageSetup/PageSetup.js";
+import {useDispatch} from "react-redux";
+import React from 'react';
+import {useCallback, useEffect} from "react";
+import {initCatalog} from "./store/actions/metadataAction.js";
+import useAuthentication from "./hooks/useAuthentication";
+
+const theme = createTheme({
+	palette: {
+		primary: {
+			main: '#3f51b5',
+		},
+		secondary: {
+			main: '#f50057',
+		},
+		disabled: {
+			main: "#56595c",
+		}
+	},
+});
+
 function App() {
 
-  return (
-    <AppBar position="sticky">
-      <Toolbar>
-        <div className="App">
-          <header className="App-header">
-            <ShoppingCartIcon style={{ 'color': "white" }} /><br></br>
-            <Typography variant="h6" component="div" align="left" marginLeft="10px" sx={{ flexGrow: 1 }}>
-              UpGrad-Eshop
-            </Typography>
+	const {AuthCtx} = useAuthentication();
+	const {accessToken} = React.useContext(AuthCtx);
+	const dispatch = useDispatch();
 
-            <SearchIcon style={{ 'color': "white" }} /><br></br>
-            <div className='search-label'>
-              <InputBase
-                placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
-              />
-            </div>
+	const initPageData = useCallback(() => {
+		dispatch(initCatalog(accessToken));
+	}, [dispatch, accessToken]);
 
-                <Button>
-                  <Link to='./Login' className="App-link">Login</Link>
-                </Button>
+	useEffect(() => {
+		initPageData();
+	}, [initPageData]);
 
-                <Button>
-                  <Link to='./SignUp' className="App-link">sign Up </Link>
-                </Button>
-            
-          </header>
-        </div>
-
-      </Toolbar>
-    </AppBar>
-
-  );
+	return (
+		<ThemeProvider theme={theme}>
+			<PageSetUp />
+		</ThemeProvider>
+	);
 }
 
 export default App;
